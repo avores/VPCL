@@ -1,9 +1,249 @@
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D2PQ6HCK08"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!doctype html>
+<html lang="en">
 
-  gtag('config', 'G-D2PQ6HCK08');
-</script>
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2PQ6HCK08"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-D2PQ6HCK08');
+  </script>
+  <meta name="google-site-verification" content="ftFOlJETX-2KNjaPh8W6s8lhigItRuu9fOmjHZZ0nY0" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>DSU-AVO</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<style type="text/css">
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  thead>tr>th:first-child {
+    width: 96px;
+  }
+
+  @media (max-width: 767px) {
+    .big-screen {
+      display: none;
+    }
+  }
+
+  @media (min-width: 767px) {
+    .small-screen {
+      display: none;
+    }
+  }
+</style>
+
+
+
+
+<body>
+  <header class="header">
+    <div class="jumbotron bg-secondary text-center">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+ 
+            <h1><a class="text-light">Cross-Modal Contrastive Learning for Visual-Aware Prosody Modeling in Automatic Voice Over</h1><br> 
+             <font size=5><span style="color:#FFFFFF"> Anonymous submission to INTERSPEECH 2024 <br></font>
+			 <!--<font size=5><span style="color:#FFFFFF"> This page is currently under construction. <br> Speech samples will be updated soon. </font>	--> 
+                </a>  
+            <p>
+              <div class="row">
+              </div>
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row" id="result">
+        <div class="col-md-12">
+        	<h4>Abstract</h4> 
+			As an extension of Text-to-Speech (TTS) techniques, Automatic Voice Over (AVO) aims to generate speech that matches with the input text and provided silent video clip. Given the intricacies of aligning speech prosody with visual expressions, exploring cross-modal interactions can achieve more nuanced expressiveness modeling. In this study, we introduce a novel cross-modal contrastive learning method to learn the correlation between facial expression and speech prosody. This approach captures the complex interplay between visual cues and auditory prosody. We evaluate our learned prosody-informed visual features through a cross-modal retrieval task, proving the ability of our approach to capture visual-prosody correlation. Furthermore, we demonstrate that learned visual features can serve as effective cues for visual-aware prosody modeling in AVO.<br>
+<br><br>
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+  <div style="text-align: center; margin-left: 40px;">
+    <img src="workflow.svg" width="420" height="240">
+    <p> <br><br>Fig. 1: An example of visual-aware prosody modeling: <br>expressive AVO system models prosody conditioned on visual information presented in the input video. Prosody of synthesized speech varies according to different facial expressions.</p>
+  </div>
+  <div style="text-align: center; margin-left: 60px;">
+    <img src="model.svg" width="840" height="450">
+    <p> <br>Fig. 2: The proposed VPCL framework. In the similarity matrix, positive samples are denoted with blue color. When using contrastive learning loss \(\mathcal{L}_{con}\), all positive pairs fall on the diagonal line, while in supervised contrastive learning with \(\mathcal{L}_{supcon}\) positive pairs can appear in locations other than diagonal line.</p>
+  </div>
+</div>
+
+
+			<br><br>
+
+      <h4>Evaluation on visual-aware prosody modeling in AVO</h4>
+      We condition the training of DSU-AVO [1] on prosody-informed visual representations as described in Sec. 3.2.<br><br>
+
+      <div style="text-align: center; margin-left: 60px;">
+        <img src="conditioned.svg" width="700" height="300">
+        <p> <br>Fig. 3: Model architecture of visual-prosody enhanced DSU-AVO. Trainable DSU-AVO modules are denoted with green color. Unit Vocoder is pretrained and frozen following [1]. Visual Conditioning module denoted with yellow color is also frozen during DSU-AVO training. </p>
+      </div>
+
+      <h5>Frameworks to compare</h5>
+      <b>DSU-AVO [1]</b>: an AVO baseline without any visual-aware prosody conditioning. <br>
+      <b>V-DSU-AVO</b>: we condition DSU-AVO training on visual feature not linked with speech prosody. Specifically, we average the frame-wise facial expression features extracted by pretrained EfficientNet-B2 along temporal dimension to obtain utterance-level visual conditioning (i.e. the Visual Conditioning module in Fig. 3 is a pretrained EfficientNet-B2 followed by a temporal pooling layer and a linear projection layer to align feature dimension).<br>
+      <b>VP-DSU-AVO</b>: we condition DSU-AVO training on VPCL-learned utterance-level prosody-informed visual feature (i.e. the Visual Conditioning module is visual encoder and projection layer from Fig. 2, trained in VPCL). <br><br>
+      For fair comparison, all frameworks share the same DSU-AVO architecture (in green), Unit Vocoder (in red), and learning objective of speech unit prediction [1]. Please refer to [1] for more implementation details. Source code will be released upon acceptance. <br><br>
+
+      <br><br>
+
+      <h5>Speech Samples</h5>
+      Even though VPCL is trained on a different dataset than the Chem dataset, which is used to train DSU-AVO, we found that the prosody-informed visual features help to improve the naturalness of synthesized speech slightly.  <br><br>
+      <table style="width:100%">
+        <tr>
+          <th style="font-size: 20px;">Ground Truth</th>
+          <th style="font-size: 20px;">DSU-AVO</th>
+          <th style="font-size: 20px;">V-DSU-AVO</th>
+          <th style="font-size: 20px;">VP-DSU-AVO (proposed)</th>
+        </tr>
+        <tr>
+          <td colspan="4"><p></p></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p>Sample 1: "Let's look at the chemical <b>reaction</b> hydrogen plus oxygen forming water under three sets of circumstances."</p></td>
+        </tr>
+        <tr>
+          <td><video src="samples-all/1_gt/7RrOhe6SSj0-000_gt.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/2_dsu/7RrOhe6SSj0-000_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/3_vdsu/7RrOhe6SSj0-000_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/4_vpdsu/7RrOhe6SSj0-000_gen.mp4" width="240" height="240" controls></video></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p></p></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p>Sample 2: "One form of heterogeneous equilibrium is solids dissolving in liquids."</p></td>
+        </tr>
+        <tr>
+          <td><video src="samples-all/1_gt/0G0wCm28Jzc-000_gt.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/2_dsu/0G0wCm28Jzc-000_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/3_vdsu/0G0wCm28Jzc-000_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/4_vpdsu/0G0wCm28Jzc-000_gen.mp4" width="240" height="240" controls></video></td>
+        </tr>
+        
+        <tr>
+          <td colspan="4"><p></p></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p>Sample 3: "For instance the intensity we haven't touched <b>on that yet</b>."</p></td>
+        </tr>
+        <tr>
+          <td><video src="samples-all/1_gt/AGZZGR5Otxw-014_gt.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/2_dsu/AGZZGR5Otxw-014_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/3_vdsu/AGZZGR5Otxw-014_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/4_vpdsu/AGZZGR5Otxw-014_gen.mp4" width="240" height="240" controls></video></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p></p></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p>Sample 4: "And here now I have a problem my heat I calculated in joules but my work I calculated in literatmospheres."</p></td>
+        </tr>
+        <tr>
+          <td><video src="samples-all/1_gt/lGcvpHgo4R8-024_gt.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/2_dsu/lGcvpHgo4R8-024_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/3_vdsu/lGcvpHgo4R8-024_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/4_vpdsu/lGcvpHgo4R8-024_gen.mp4" width="240" height="240" controls></video></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p></p></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p>Sample 5: "The electron spins will be <b>paired</b> and cancel each other out."</p></td>
+        </tr>
+        <tr>
+          <td><video src="samples-all/1_gt/mgg27LTeNPo-057_gt.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/2_dsu/mgg27LTeNPo-057_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/3_vdsu/mgg27LTeNPo-057_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/4_vpdsu/mgg27LTeNPo-057_gen.mp4" width="240" height="240" controls></video></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p></p></td>
+        </tr>
+        <tr>
+          <td colspan="4"><p>Sample 6: "So where the hydrogen had unpaired electrons hydrogen atoms had an unpaired electron and was paramagnetic."</p></td>
+        </tr>
+        <tr>
+          <td><video src="samples-all/1_gt/mgg27LTeNPo-054_gt.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/2_dsu/mgg27LTeNPo-054_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/3_vdsu/mgg27LTeNPo-054_gen.mp4" width="240" height="240" controls></video></td>
+          <td><video src="samples-all/4_vpdsu/mgg27LTeNPo-054_gen.mp4" width="240" height="240" controls></video></td>
+        </tr>
+        
+      </table>
+
+      <br>
+                     
+                   
+
+        <div class="col">
+          <h5>References</h5>
+    
+          [1] J. Lu, B. Sisman, M. Zhang, and H. Li, "High-quality Automatic Voice Over with Accurate Alignment: Supervision through Self-Supervised Discrete Speech Units," in Proc. INTERSPEECH 2023, pp. 5536-5540.
+          <br>
+        
+        
+        </div>
+      </div>
+      <!--<hr>
+      <div class="row" id="contact">
+          <div class="col">
+            <h2>Contact</h2>
+            <div></div>
+          </div>
+        </div> -->
+<!--<div align="center" style="margin:auto;padding-top:10px">
+        <div style="width:100%">
+        <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=YvIW2uh8CTeJY0rhYoMoKE6zPfPKHthroRgvJRTSdjg&cl=ffffff&w=a"></script>
+        </div>
+</div>-->
+<br><br>
+
+    </div>
+  </main>
+  <footer class="bg-secondary text-light mt-4 pt-3 pb-2 ">
+    <div class="container">
+      <p class="text-center">
+        
+      </p>
+    </div>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
